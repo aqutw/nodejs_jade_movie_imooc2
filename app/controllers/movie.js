@@ -14,7 +14,7 @@ exports.detail = function(req, res){
     });
 };
 
-app.get('/admin/movie', function(req, res){
+exports['new'] = function(req, res){
     res.render('admin', {
         title: 'imooc admin',
         movie: {
@@ -24,7 +24,7 @@ app.get('/admin/movie', function(req, res){
             summary: '', language: ''
         }
     });
-});
+};
 
 // app.get('/admin/update/:id', function(req, res){
 exports.update = function(req, res){

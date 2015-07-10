@@ -21,9 +21,9 @@ app.use(function(req, res, next){
     app.get('/admin/userlist', User.list);
     
     app.get('/movie/:id', Movie.detail);
-    app.get('/admin/new', Movie.new);
+    app.get('/admin/new', Movie['new']);
     app.get('/admin/update/:id', Movie.update);
-    app.post('/admin/movie', Movie.save);
+    app.post('/admin/movie/new', Movie.save);
     app.get('/admin/list', Movie.list);
     app.delete('/admin/list', Movie.del);
 

@@ -1,7 +1,9 @@
+var Movie = require('../models/movies');
+
 var LOCALS_USER_KEY = 'user';
 var SESS_USER_KEY = 'user';
 
-app.get('/', function(req, res){
+exports.index = function(req, res){
     console.log('req.session[SESS_USER_KEY]', req.session[SESS_USER_KEY]);
     
     Movie.fetch(function(err, movies){
@@ -12,4 +14,4 @@ app.get('/', function(req, res){
     });
     
     });
-});
+};

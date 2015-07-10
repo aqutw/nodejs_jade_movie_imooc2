@@ -39,8 +39,18 @@ app.get('/', function(req, res){
 // signup
 app.post('/user/signup', function(req, res){
     var _user = req.body.user;
-    var user = new User(_user);
     
+    User.find({name: _user.name}, function(err, u){
+        if (err) {
+            console.log(err);
+        }
+        
+        if (u) {
+            return res.redirect('/')
+        } else {
+             
+    var user = new User(_user);
+        
     user.save(function(err, user){
         if (err) {
             console.log(err);
@@ -49,6 +59,10 @@ app.post('/user/signup', function(req, res){
         // console.log(user);
         res.redirect('/admin/userlist');
     });
+    
+        }//end else
+    });//end User.find
+    
 });
 
 app.get('/admin/userlist', function(req, res){

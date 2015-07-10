@@ -17,6 +17,9 @@ app.set('view engine', 'jade');
 
 app.use(bodyParser()) // app.use(express.bodyParser())
 app.use(express.static(path.join(__dirname, 'bower_components')))
+
+app.locals.moment = require('moment');
+
 app.listen(port);
 
 console.log('imooc started on port '+port);

@@ -122,3 +122,22 @@ app.get('/admin/list', function(req, res){
     });
     
 });
+
+app.delete('/admin/list', function(req, res){
+    var id = req.query.id;
+    
+    if (id) {
+        Movie.remove({_id: id}, function(err, movie){
+            if (err) {
+                return console.log(err);
+            }
+            
+            res.json({success: 1});
+        });
+    }
+});
+
+/* ok
+app.get('/testjson', function(req, res){
+    res.json({a:1, b:2});
+});*/

@@ -2,5 +2,5 @@ node_modules
 bower_components/
 typings/
 .settings/
-public
+public/libs
 logfile.txt

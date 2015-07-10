@@ -17,6 +17,9 @@ var app = express();
 var DB_URL = 'mongodb://localhost/imooc';
 mongoose.connect(DB_URL);
 
+var LOCALS_USER_KEY = 'user';
+var SESS_USER_KEY = 'user';
+
 app.set('views', './views/pages' );
 app.set('view engine', 'jade');
 
@@ -37,7 +40,10 @@ app.listen(port);
 console.log('imooc started on port '+port);
 
 app.get('/', function(req, res){
-    console.log('req.session.user', req.session.user);
+    console.log('req.session[SESS_USER_KEY]', req.session[SESS_USER_KEY]);
+    
+    app.locals[LOCALS_USER_KEY] = req.session[SESS_USER_KEY];
+    
     Movie.fetch(function(err, movies){
         if (err){console.log(err);}
     res.render('index', {
@@ -77,6 +83,13 @@ app.post('/user/signup', function(req, res){
     
 });
 
+app.get('/logout', function(req, res){
+    delete req.session[SESS_USER_KEY];
+    delete app.locals[LOCALS_USER_KEY];
+    
+    res.redirect('/?logoutted');
+})
+
 app.post('/user/signin', function(req, res){
     var _user = req.body.user;
     var name = _user.name;
@@ -96,7 +109,7 @@ app.post('/user/signin', function(req, res){
             
             if (isMatched) {
                 console.log('Password is matched!!!');
-                req.session.user = user;
+                req.session[SESS_USER_KEY] = user;
                 
                 return res.redirect('/');
             } else {

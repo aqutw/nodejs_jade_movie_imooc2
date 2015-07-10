@@ -1,6 +1,8 @@
 /// <reference path="typings/node/node.d.ts"/>
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var path = require('path');
 var mongoose = require('mongoose');
 var _ = require('underscore');
@@ -18,6 +20,8 @@ app.set('view engine', 'jade');
 
 app.use(bodyParser()) // app.use(express.bodyParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(cookieParser());
+app.use(session({secret: 'imooc'}));
 
 app.locals.moment = require('moment');
 
@@ -26,6 +30,7 @@ app.listen(port);
 console.log('imooc started on port '+port);
 
 app.get('/', function(req, res){
+    console.log('req.session.user', req.session.user);
     Movie.fetch(function(err, movies){
         if (err){console.log(err);}
     res.render('index', {
@@ -84,6 +89,8 @@ app.post('/user/signin', function(req, res){
             
             if (isMatched) {
                 console.log('Password is matched!!!');
+                req.session.user = user;
+                
                 return res.redirect('/');
             } else {
                 console.log('Password is not matched....');

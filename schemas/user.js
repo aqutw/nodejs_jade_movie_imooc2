@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bcryptjs = require('bcryptjs');
+var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
     name: {
@@ -19,13 +21,24 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre('save', function(next){
+    var user = this;
     if (this.isNew) {
         this.meta.createAt = this.meta.updateAt = Date.now()
     } else {
         this.meta.updateAt = Date.now()
     }
     
-    next();
+    bcryptjs.genSalt(SALT_WORK_FACTOR, function(err, salt){
+        if (err) {return next(err);}
+        
+        bcryptjs.hash(user.password, salt, function(err, hash){
+            if (err) {return next(err);}
+            
+            user.password = hash;
+            next();
+        });//end .hash
+    });//end .genSalt
+    
 });
 
 UserSchema.statics = {

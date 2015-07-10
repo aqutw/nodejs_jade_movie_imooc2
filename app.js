@@ -1,62 +1,47 @@
 /// <reference path="typings/node/node.d.ts"/>
 var express = require('express');
-var port = process.env.PORT || 3000;
+var bodyParser = require('body-parser');
 var path = require('path');
+var mongoose = require('mongoose');
+var _ = require('underscore');
+
+var Movie = require('./models/movies');
+
+var port = process.env.PORT || 3000;
 var app = express();
+
+mongoose.connect('mongodb://localhost/imooc')
 
 app.set('views', './views/pages' );
 app.set('view engine', 'jade');
 
-app.use(express.bodyParser())
+app.use(bodyParser()) // app.use(express.bodyParser())
 app.use(express.static(path.join(__dirname, 'bower_components')))
 app.listen(port);
 
 console.log('imooc started on port '+port);
 
 app.get('/', function(req, res){
+    Movie.fetch(function(err, movies){
+        if (err){console.log(err);}
     res.render('index', {
         title: 'imooc index',
-        movies: [{
-            title: 'movie1',
-            _id:1,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5'
-        },{
-            title: 'movie1',
-            _id:2,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5'
-        },{
-            title: 'movie1',
-            _id:3,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5'
-        },{
-            title: 'movie1',
-            _id:4,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5'
-        },{
-            title: 'movie1',
-            _id:5,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5'
-        },{
-            title: 'movie1',
-            _id:6,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5'
-        }]
+        movies: movies
+    });
+    
     });
 });
 
 app.get('/movie/:id', function(req, res){
+    var id = req.params.id;
+    
+    Movie.findById(id, function(err, movie){
+
     res.render('detail', {
-        title: 'imooc detail',
-        movie: {
-            doctor: '里亞',
-            country: 'US',
-            title: 'moviename',
-            year: 2014,
-            poster: 'http://r3.ykimg.com/05160000530EEB63675839160D0B79D5',
-            language: 'Eng',
-            flash: 'http://player.youku.com/player.php/sid/XNjA1Njc0NTUy/v.swf',
-            summary: 'asdlkjfladjflafladfafalkfakfjaljdfslk'
-        }
+        title: 'imooc detail' + movie.title,
+        movie: movie
+    });
+    
     });
 });
 
@@ -72,18 +57,64 @@ app.get('/admin/movie', function(req, res){
     });
 });
 
+app.get('/admin/update/:id', function(req, res){
+    var id = req.params.id;
+    if (id) {
+        Movie.findById(id, function(err, movie){
+            res.render('admin', {
+                title: 'imooc 後台更新頁',
+                movie: movie
+            });
+        });//end findById
+    }
+});
+
+app.post('/admin/movie/new', function(res, req){
+    var id = req.body.movie._id;
+    var movieObj = req.body.movie;
+    var _movie;
+    
+    if (id !== 'undefined'){
+        Movie.findById(id, function(err, movie){
+            if(err){console.log(err);}
+            
+            _movie = _.extend(movie, movieObj);
+            _movie.save(function(err, movie){
+                if(err){console.log(err);}
+                
+                res.redirect('/movie/' + movie._id);
+            });//end save
+        });//end findById
+    } else {
+        _movie = new Movie({
+            doctor: movieObj.doctor,
+            title: movieObj.title,
+            country: movieObj.country,
+            language: movieObj.language,
+            year: movieObj.year, 
+            poster: movieObj.poster,
+            summary: movieObj.summary,
+            flash: movieObj.flash
+        });
+        
+        _movie.save(function(err, movie){
+            if(err){console.log(err);}
+            
+            res.redirect('/movie/' + movie._id);
+        });//end save
+    }
+});
+
 app.get('/admin/list', function(req, res){
+    
+    Movie.fetch(function(err, movies){
+        if (err){console.log(err);}
+    
     res.render('list', {
         title: 'imooc list',
-        movies: [{
-            title: 'movie1',
-            _id:1,
-            doctor: '里亞',
-            country: 'US',
-            year: 2014,
-            language: 'eng',
-            flash: 'http://player.youku.com/player.php/sid/XNjA1Njc0NTUy/v.swf',
-            summary: 'aslkdfaslkfjdaljfaldjk'
-        }]
+        movies: movies
     });
+    
+    });
+    
 });

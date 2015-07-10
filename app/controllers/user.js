@@ -1,0 +1,80 @@
+var User = require('../models/user');
+
+// signup
+exports.signup = function(req, res){
+    var _user = req.body.user;
+    
+    User.find({name: _user.name}, function(err, u){
+        if (err) {
+            console.log(err);
+        }
+        
+        if (u) {
+            return res.redirect('/')
+        } else {
+             
+    var user = new User(_user);
+        
+    user.save(function(err, user){
+        if (err) {
+            console.log(err);
+        }
+        
+        // console.log(user);
+        res.redirect('/admin/userlist');
+    });
+    
+        }//end else
+    });//end User.find
+    
+};
+
+exports.logout = function(req, res){
+    delete req.session[SESS_USER_KEY];
+    delete app.locals[LOCALS_USER_KEY];
+    
+    res.redirect('/?logoutted');
+};
+
+exports.signin = function(req, res){
+    var _user = req.body.user;
+    var name = _user.name;
+    var password = _user.password;
+    
+    User.findOne({name: name}, function(err, user){
+        if (err) {console.log(err);}
+        
+        if (!user) {
+            return res.redirect('/?not_exist_user');
+        }
+        
+        user.comparePassword(password, function(err, isMatched){
+            if (err) {
+                console.log(err);
+            }
+            
+            if (isMatched) {
+                console.log('Password is matched!!!');
+                req.session[SESS_USER_KEY] = user;
+                
+                return res.redirect('/');
+            } else {
+                console.log('Password is not matched....');
+            }
+        });
+    });
+};
+
+exports.list = function(req, res){
+    
+    User.fetch(function(err, users){
+        if (err){console.log(err);}
+    
+    res.render('userlist', {
+        title: 'imooc userlist',
+        users: users
+    });
+    
+    });
+    
+};

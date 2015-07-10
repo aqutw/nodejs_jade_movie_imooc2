@@ -13,5 +13,18 @@ app.use(function(req, res, next){
     
     next();
 });
+    app.get('/', Index.index)
+    
+    app.post('/user/signup', User.signup);
+    app.post('/user/signin', User.signin);
+    app.get('/logout', User.logout);
+    app.get('/admin/userlist', User.list);
+    
+    app.get('/movie/:id', Movie.detail);
+    app.get('/admin/new', Movie.new);
+    app.get('/admin/update/:id', Movie.update);
+    app.post('/admin/movie', Movie.save);
+    app.get('/admin/list', Movie.list);
+    app.delete('/admin/list', Movie.del);
 
 }//end module.exports

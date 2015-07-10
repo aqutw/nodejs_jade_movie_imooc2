@@ -44,3 +44,9 @@ require('./config/routes')(app);
 app.listen(port);
 
 console.log('imooc started on port '+port);
+
+/* ok
+app.get('/testjson', function(req, res){
+    res.json({a:1, b:2});
+});*/
+

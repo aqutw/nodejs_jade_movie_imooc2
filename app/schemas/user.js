@@ -8,6 +8,10 @@ var UserSchema = new mongoose.Schema({
         type: String
     },
     password: String,
+    role: {
+        type: Number,
+        default: 0
+    }, // {0: normal user, 1: verified user, 2: professional user, >10: admin, >50: superadmin}
     meta: {
         createAt: {
             type: Date,

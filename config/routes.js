@@ -15,10 +15,10 @@ app.use(function(req, res, next){
 });
     app.get('/', Index.index)
     
-    app.get('/user/signup', User.signup.get);
-    app.post('/user/signup', User.signup.post);
-    app.get('/user/signin', User.signin.get);
-    app.post('/user/signin', User.signin.post);
+    app.get('/signup', User.signup.get);
+    app.post('/signup', User.signup.post);
+    app.get('/signin', User.signin.get);
+    app.post('/signin', User.signin.post);
     app.get('/logout', User.logout);
     app.get('/admin/userlist', User.list);
     

@@ -19,7 +19,7 @@ exports.signup.post = function(req, res){
         }
         
         if (u) {
-            return res.redirect('/')
+            return res.redirect('/signin')
         } else {
              
     var user = new User(_user);
@@ -60,7 +60,7 @@ exports.signin.post = function(req, res){
         if (err) {console.log(err);}
         
         if (!user) {
-            return res.redirect('/?not_exist_user');
+            return res.redirect('/signup');
         }
         
         user.comparePassword(password, function(err, isMatched){
@@ -75,6 +75,7 @@ exports.signin.post = function(req, res){
                 return res.redirect('/');
             } else {
                 console.log('Password is not matched....');
+                return res.redirect('/signin');
             }
         });
     });

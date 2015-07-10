@@ -47,9 +47,24 @@ app.post('/user/signup', function(req, res){
         }
         
         // console.log(user);
-        res.redirect('/');
+        res.redirect('/admin/userlist');
     });
 });
+
+app.get('/admin/userlist', function(req, res){
+    
+    User.fetch(function(err, users){
+        if (err){console.log(err);}
+    
+    res.render('userlist', {
+        title: 'imooc userlist',
+        users: users
+    });
+    
+    });
+    
+});
+
 
 app.get('/movie/:id', function(req, res){
     var id = req.params.id;

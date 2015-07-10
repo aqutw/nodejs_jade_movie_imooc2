@@ -11,25 +11,25 @@ app.listen(port);
 console.log('imooc started on port '+port);
 
 app.get('/', function(req, res){
-	res.render('index', {
-		title: 'imooc index'
-	});
+    res.render('index', {
+        title: 'imooc index'
+    });
 });
 
 app.get('/movie/:id', function(req, res){
-	res.render('detail', {
-		title: 'imooc detail'
-	});
+    res.render('detail', {
+        title: 'imooc detail'
+    });
 });
 
 app.get('/admin/movie', function(req, res){
-	res.render('admin', {
-		title: 'imooc admin'
-	});
+    res.render('admin', {
+        title: 'imooc admin'
+    });
 });
 
 app.get('/admin/list', function(req, res){
-	res.render('list', {
-		title: 'imooc list'
-	});
+    res.render('list', {
+        title: 'imooc list'
+    });
 });

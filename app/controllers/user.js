@@ -1,5 +1,8 @@
 var User = require('../models/user');
 
+var LOCALS_USER_KEY = 'user';
+var SESS_USER_KEY = 'user';
+
 // signup
 exports.signup = function(req, res){
     var _user = req.body.user;
@@ -31,7 +34,7 @@ exports.signup = function(req, res){
 
 exports.logout = function(req, res){
     delete req.session[SESS_USER_KEY];
-    delete app.locals[LOCALS_USER_KEY];
+    // delete app.locals[LOCALS_USER_KEY];
     
     res.redirect('/?logoutted');
 };

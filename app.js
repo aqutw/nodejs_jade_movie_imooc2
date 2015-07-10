@@ -39,10 +39,15 @@ app.listen(port);
 
 console.log('imooc started on port '+port);
 
+// pre handle user
+app.use(function(req, res, next){
+    app.locals[LOCALS_USER_KEY] = req.session[SESS_USER_KEY];
+    
+    next();
+});
+
 app.get('/', function(req, res){
     console.log('req.session[SESS_USER_KEY]', req.session[SESS_USER_KEY]);
-    
-    app.locals[LOCALS_USER_KEY] = req.session[SESS_USER_KEY];
     
     Movie.fetch(function(err, movies){
         if (err){console.log(err);}

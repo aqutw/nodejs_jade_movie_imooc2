@@ -2,6 +2,7 @@ var User = require('../models/user');
 
 var LOCALS_USER_KEY = 'user';
 var SESS_USER_KEY = 'user';
+var EQUAL_OR_LESS_THAN_ADMIN_ROLE = 10;
 
 // signup
 exports.signup = {};
@@ -94,3 +95,21 @@ exports.list = function(req, res){
     });
     
 };
+
+// middleware for user
+exports.signinRequired = function(req, res, next){
+    var user = req.session.user;
+    if (!user) {
+        return res.redirect('/signin'); 
+    }
+    next();
+};
+exports.adminRequired = function(req, res, next){
+    var user = req.session.user;
+    console.log('user.role', user.role);
+    if (!user.role || user.role <= EQUAL_OR_LESS_THAN_ADMIN_ROLE) {
+        return res.redirect('/signin');
+    }
+    
+    next();
+}

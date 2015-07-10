@@ -20,7 +20,7 @@ app.use(function(req, res, next){
     app.get('/signin', User.signin.get);
     app.post('/signin', User.signin.post);
     app.get('/logout', User.logout);
-    app.get('/admin/userlist', User.list);
+    app.get('/admin/userlist', User.signinRequired, User.adminRequired, User.list);
     
     app.get('/movie/:id', Movie.detail);
     app.get('/admin/new', Movie['new']);

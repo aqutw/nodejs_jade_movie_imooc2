@@ -4,7 +4,13 @@ var LOCALS_USER_KEY = 'user';
 var SESS_USER_KEY = 'user';
 
 // signup
-exports.signup = function(req, res){
+exports.signup = {};
+exports.signup.get = function(req, res){
+    res.render('signup', {
+        title: 'imooc user signup'
+    })
+};
+exports.signup.post = function(req, res){
     var _user = req.body.user;
     
     User.find({name: _user.name}, function(err, u){
@@ -39,7 +45,13 @@ exports.logout = function(req, res){
     res.redirect('/?logoutted');
 };
 
-exports.signin = function(req, res){
+exports.signin = {};
+exports.signin.get = function(req, res){
+    res.render('signin', {
+        title: 'imooc user signin'
+    })
+};
+exports.signin.post = function(req, res){
     var _user = req.body.user;
     var name = _user.name;
     var password = _user.password;

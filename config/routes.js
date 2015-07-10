@@ -1,10 +1,12 @@
 var _ = require('underscore');
 
-var Movie = require('./models/movies');
-var User = require('./models/user');
+var Movie = require('../models/movies');
+var User = require('../models/user');
 
 var LOCALS_USER_KEY = 'user';
 var SESS_USER_KEY = 'user';
+
+module.exports = function(app){
 
 // pre handle user
 app.use(function(req, res, next){
@@ -212,3 +214,5 @@ app.delete('/admin/list', function(req, res){
 app.get('/testjson', function(req, res){
     res.json({a:1, b:2});
 });*/
+
+}//end module.exports

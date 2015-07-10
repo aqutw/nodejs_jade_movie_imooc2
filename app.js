@@ -1,5 +1,6 @@
 /// <reference path="typings/node/node.d.ts"/>
 var express = require('express');
+var logger = require('express-logger');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -27,6 +28,16 @@ app.use(session({secret: 'imooc',
 }));
 
 app.locals.moment = require('moment');
+
+if ('development' === app.get('env')){
+    app.set('showStackError', true);
+    
+    //app.use(express.logger(':method :url :status'));
+    app.use( logger({path: "./logfile.txt"}) );
+    
+    app.locals.pretty = true;
+    mongoose.set('debug', true);
+}
 
 require('./config/routes')(app);
 

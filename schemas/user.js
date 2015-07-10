@@ -41,7 +41,17 @@ UserSchema.pre('save', function(next){
     
 });
 
-UserSchema.statics = {
+UserSchema.methods = { //instance methods
+    comparePassword: function(_password, cb){
+        bcryptjs.compare(_password, this.password, function(err, isMatch){
+            if (err) {return cb(err);}
+            
+            cb(null, isMatch);
+        });
+    }
+}
+
+UserSchema.statics = { //static method
     fetch: function(cb){
         return this.find({})
             .sort('meta.updateAt')

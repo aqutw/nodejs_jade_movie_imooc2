@@ -1,6 +1,4 @@
-var Movie = require('../models/movies');
 var Category = require('../models/category');
-var _ = require('underscore');
 
 exports['new'] = function(req, res){
     res.render('category_admin', {

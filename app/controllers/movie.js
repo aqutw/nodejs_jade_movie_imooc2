@@ -36,10 +36,15 @@ exports.update = function(req, res){
     var id = req.params.id;
     if (id) {
         Movie.findById(id, function(err, movie){
+            if(err){console.log(err);}
+            Category.find({}, function(err, categories){
+                if(err){console.log(err);}
             res.render('admin', {
                 title: 'imooc 後台更新頁',
-                movie: movie
+                movie: movie,
+                categories: categories
             });
+            });//end Category.find
         });//end findById
     }
 };

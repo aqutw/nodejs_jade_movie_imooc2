@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var Schemas = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+var ObjectId = Schemas.Types.ObjectId;
 
 var CategorySchema = new mongoose.Schema({
    name: String,

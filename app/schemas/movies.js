@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schemas = mongoose.Schema;
 var ObjectId = Schemas.Types.ObjectId;
 
-var MovieSchema = new Schema({
+var MovieSchema = new Schemas({
    doctor: String,
    title: String,
    language: String,

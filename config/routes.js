@@ -2,6 +2,7 @@ var Index = require('../app/controllers/index');
 var User = require('../app/controllers/user');
 var Movie = require('../app/controllers/movie');
 var Comment = require('../app/controllers/comment');
+var Category = require('../app/controllers/category');
 
 var LOCALS_USER_KEY = 'user';
 var SESS_USER_KEY = 'user';
@@ -31,5 +32,9 @@ app.use(function(req, res, next){
     app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del);
     
     app.post('/user/comment', User.signinRequired, Comment.save);
+    
+    app.get('admin/category/new', User.signinRequired, User.adminRequired, Category.new);
+    app.post('admin/category', User.signinRequired, User.adminRequired, Category.save);
+    app.get('admin/category/list', User.signinRequired, User.adminRequired, Category.list);
 
 }//end module.exports

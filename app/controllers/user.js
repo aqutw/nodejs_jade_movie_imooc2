@@ -14,12 +14,12 @@ exports.signup.get = function(req, res){
 exports.signup.post = function(req, res){
     var _user = req.body.user;
     
-    User.find({name: _user.name}, function(err, u){
+    User.findOne({name: _user.name}, function(err, u){
         if (err) {
             console.log(err);
         }
         
-        if (u) {
+        if (u) { //repeated username
             return res.redirect('/signin')
         } else {
              
@@ -31,7 +31,7 @@ exports.signup.post = function(req, res){
         }
         
         // console.log(user);
-        res.redirect('/admin/userlist');
+        res.redirect('/admin/user/list');
     });
     
         }//end else

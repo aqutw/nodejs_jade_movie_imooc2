@@ -28,4 +28,10 @@ $(function(){
         }).appendTo('#commentForm');
         }
     });
+    
+    $('[data-toggle=modal][data-target]').click(function(){
+        $('#signinModal').find('form').append('<input type=hidden name=redirect_to value="'
+            +location.href.split(location.host)[1]
+            +'" />');
+    });
 });

@@ -73,7 +73,16 @@ exports.signin.post = function(req, res){
                 console.log('Password is matched!!!');
                 req.session[SESS_USER_KEY] = user;
                 
-                return res.redirect('/');
+                var req_redirect_to = req.body.redirect_to,
+                    redirect_to = '/';
+                if( req_redirect_to 
+                    && req_redirect_to!=''
+                    && req_redirect_to.indexOf('//')<0  //security issue
+                    && req_redirect_to.indexOf('http')<0 //security issue
+                    ){
+                    redirect_to = req_redirect_to;
+                }
+                return res.redirect(redirect_to);
             } else {
                 console.log('Password is not matched....');
                 return res.redirect('/signin');

@@ -6,16 +6,16 @@ exports.detail = function(req, res){
     var id = req.params.id;
     
     Movie.findById(id, function(err, movie){
-        Comment.find({movie: id}).populate('from', 'name').exec( function(err, comments){
+        Comment.find({movie: id})
+        .populate('from', 'name')
+        .exec( function(err, comments){
             // console.log(comments);
-    res.render('detail', {
-        title: 'imooc detail' + movie.title,
-        movie: movie,
-        comments: comments
-    });//end render
-
+            res.render('detail', {
+                title: 'imooc detail' + movie.title,
+                movie: movie,
+                comments: comments
+            });//end render
         });//end Comment.find
-    
     });//end Movie.findById
 };
 

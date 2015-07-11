@@ -36,5 +36,7 @@ app.use(function(req, res, next){
     app.get('/admin/category/new', User.signinRequired, User.adminRequired, Category['new']);
     app.post('/admin/category', User.signinRequired, User.adminRequired, Category.save);
     app.get('/admin/category/list', User.signinRequired, User.adminRequired, Category.list);
+    
+    app.get('/results', Index.search)
 
 }//end module.exports

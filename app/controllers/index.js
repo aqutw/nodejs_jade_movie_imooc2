@@ -29,20 +29,29 @@ exports.index = function(req, res){
 
 exports.search = function(req, res){ //TODO: how to re-used index logic (Category.find)
     var catId = req.query.cat;
-    var page = req.query.p;
+    var page = +req.query.p;
     var PAGESIZE = 2;
     var index = page * PAGESIZE;
     
     Category.find({_id: catId})
-        .populate({path: 'movies', options: {limit: PAGESIZE, skip: index}})
+        .populate({path: 'movies', 
+            //options: {limit: PAGESIZE, skip: index}
+            })
         .exec(function(err, categories){
             if (err) {console.log(err);}
-            
+
             var category = categories[0] || {};
+            var movies = category.movies || [];
+            var results = movies.slice(index, index + PAGESIZE);
+            console.log('movies', movies);
+            console.log('results', results);
+            console.log('category.movies.length', category.movies.length)
             res.render('results', {
                 title: 'imooc Search Result page',
-                keyword: category.name,
-                category: category
+                currentPage: page + 1,
+                query: 'cat=' + catId, //TODO: fix security issue
+                totalPage: Math.ceil(movies.length / PAGESIZE),
+                movies: results
             });
         });
 };

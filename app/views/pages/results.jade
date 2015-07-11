@@ -7,8 +7,8 @@ block content
                 .panel-heading
                     h3 #{keyword}
                 .panel-body
-                    if category.movies && category.movies.length>0 
-                        each item in category.movies
+                    if movies && movies.length>0 
+                        each item in movies
                             .col-md-2
                                 .thumbnail
                                     a(href="/movie/#{item._id}")
@@ -16,3 +16,13 @@ block content
                                     .caption
                                         h3 #{item.title}
                                         p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 觀看預告片
+            ul.pagination
+                - for (var i=1; i<=totalPage; i++) {
+                    - if (currentPage==i) {
+                        li.active
+                            span #{i}
+                    - } else {
+                        li
+                            a(href="/results?p=#{i - 1}&#{query}") #{i}
+                    - }
+                - }

@@ -33,7 +33,7 @@ block content
                                 each reply in item.reply
                                     .media
                                         .pull-left
-                                            img.media-object
+                                            img.media-object(style="width:30px;height:30px;border:1px solid")
                                         .media-body
                                             h4.media-heading #{reply.from.name}
                                             p #{reply.content} 

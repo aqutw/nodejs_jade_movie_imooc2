@@ -35,7 +35,10 @@ block content
                                         .pull-left
                                             img.media-object(style="width:30px;height:30px;border:1px solid")
                                         .media-body
-                                            h4.media-heading #{reply.from.name}
+                                            h4.media-heading 
+                                                | #{reply.from.name}
+                                                span.text-info &nbsp;回覆&nbsp;
+                                                | #{reply.to.name}:
                                             p #{reply.content} 
             #comments
                 form#commentForm(action="/user/comment", method="POST", style="padding:0 0 60px")

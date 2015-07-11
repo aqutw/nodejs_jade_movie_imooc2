@@ -19,3 +19,9 @@ block content
                     dd= movie.year
                     dt 簡介
                     dd= movie.summary
+        .row
+            form(action="/user/comment", method="POST")
+                input(type="hidden", name="comment[movie]", value="#{movie._id}")
+                .form-group
+                    textarea.form-control(name="comment[content]", cols="30", rows="10")
+                button.btn.btn-primary(type="submit") Submit

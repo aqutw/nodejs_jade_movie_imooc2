@@ -87,8 +87,8 @@ exports.save = function(req, res){
                     
                     category.save(function(err, category){
                         res.redirect('/movie/' + movie._id); //<--repeated logic
-                    });
-                });
+                    });//end Category.save
+                });//end Category.findById
             }else if(catName){
                 var category = new Category({
                     name: catName,
@@ -97,7 +97,7 @@ exports.save = function(req, res){
                 
                 category.save(function(err, category){
                     res.redirect('/movie/' + movie._id); //<--repeated logic
-                });
+                });//end Category.save
             }
             
         });//end save

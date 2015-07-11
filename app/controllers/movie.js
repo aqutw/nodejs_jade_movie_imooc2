@@ -1,17 +1,22 @@
 var Movie = require('../models/movies');
+var Comment = require('../models/comment');
 var _ = require('underscore');
 
 exports.detail = function(req, res){
     var id = req.params.id;
     
     Movie.findById(id, function(err, movie){
-
+        Comment.find({movie: id}, function(err, comments){
+            // console.log(comments);
     res.render('detail', {
         title: 'imooc detail' + movie.title,
-        movie: movie
-    });
+        movie: movie,
+        comments: comments
+    });//end render
+
+        });//end Comment.find
     
-    });
+    });//end Movie.findById
 };
 
 exports['new'] = function(req, res){

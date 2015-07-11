@@ -11,14 +11,14 @@ block content
                     .col-sm-10
                         input#inputTitle.form-control(type="text", name="movie[title]", value=movie.title)
                 .form-group
-                    label.col-sm-3.control-label(form="inputTitle") 電影分類
+                    label.col-sm-3.control-label(form="inputCategory") 電影分類
                     .col-sm-10
-                        input#inputTitle.form-control(type="text", name="movie[categoryName]", value=movie.categoryName)
+                        input#inputCategory.form-control(type="text", name="movie[categoryName]", value=movie.categoryName)
                 .form-group
                     label.col-sm-3.control-label 分類選擇
                     each cat in categories
                         label.radio-inline
-                            input(type="radio", name="movie[category]", value="#{cat._id}", checked=cat._id.toString()==movie.category.toString())
+                            input(type="radio", name="movie[category]", value="#{cat._id}", checked=movie._id && cat._id.toString()==movie.category.toString())
                             | #{cat.name}
                 .form-group
                     label.col-sm-3.control-label(form="inputDoctor") 導演

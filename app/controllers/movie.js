@@ -101,7 +101,10 @@ exports.save = function(req, res){
                 });
                 
                 category.save(function(err, category){
+                    _movie.category = category._id;
+                    movie.save(function(err, movie){
                     res.redirect('/movie/' + movie._id); //<--repeated logic
+                    });
                 });//end Category.save
             }
             

@@ -6,7 +6,11 @@ var ObjectId = Schema.Types.ObjectId;
 var CommentSchema = new mongoose.Schema({
     movie: {type: ObjectId, ref: 'Movie'},
     from: {type: ObjectId, ref: 'User'},
-    to: {type: ObjectId, ref: 'User'},
+    reply: [{
+        from: {type: Object, ref: 'User'},
+        to: {type: ObjectId, ref: 'User'}, //--> I think it should be ref: 'Comment'
+        content: String
+    }],    
     content: String,
     meta: {
         createAt: {

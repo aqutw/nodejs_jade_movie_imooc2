@@ -24,15 +24,23 @@ block content
                 each item in comments
                     li.media
                         .pull-left
-                            img.media-object
+                            a.comment(href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
+                                img.media-object
                         .media-body
                             h4.media-heading #{item.from.name}
                             p #{item.content}
-                            //- .media
+                            .media
                                 .pull-left
                                     img.media-object
-            form(action="/user/comment", method="POST")
-                input(type="hidden", name="comment[movie]", value="#{movie._id}")
-                .form-group
-                    textarea.form-control(name="comment[content]", cols="30", rows="10")
-                button.btn.btn-primary(type="submit") Submit
+                                .media-body
+                                    h4.media-heading
+                                    p 
+            #comments
+                form#commentForm(action="/user/comment", method="POST")
+                    input(type="hidden", name="comment[movie]", value="#{movie._id}")
+                    .form-group
+                        textarea.form-control(name="comment[content]", cols="30", rows="10")
+                    button.btn.btn-primary(type="submit") Submit
+                    
+                    
+    script(src="/js/detail.js")

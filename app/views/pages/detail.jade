@@ -29,18 +29,20 @@ block content
                         .media-body
                             h4.media-heading #{item.from.name}
                             p #{item.content}
-                            .media
-                                .pull-left
-                                    img.media-object
-                                .media-body
-                                    h4.media-heading
-                                    p 
+                            if item.reply && item.reply.length>0
+                                each reply in item.reply
+                                    .media
+                                        .pull-left
+                                            img.media-object
+                                        .media-body
+                                            h4.media-heading ${reply.from.name}
+                                            p #{reply.content} 
             #comments
-                form#commentForm(action="/user/comment", method="POST")
+                form#commentForm(action="/user/comment", method="POST", style="padding:0 0 60px")
                     input(type="hidden", name="comment[movie]", value="#{movie._id}")
                     .form-group
                         textarea.form-control(name="comment[content]", cols="30", rows="10")
-                    button.btn.btn-primary(type="submit") Submit
+                    button.btn.btn-primary(type="submit") Submit                    
                     
                     
     script(src="/js/detail.js")

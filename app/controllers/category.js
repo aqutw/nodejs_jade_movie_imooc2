@@ -4,7 +4,8 @@ var _ = require('underscore');
 
 exports['new'] = function(req, res){
     res.render('category_admin', {
-        title: 'imooc admin category page'
+        title: 'imooc admin category page',
+        category: {} //<--emptyObject for view 
     });
 };
 

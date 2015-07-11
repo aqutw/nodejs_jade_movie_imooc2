@@ -25,7 +25,7 @@ block content
                     li.media
                         .pull-left
                             a.comment(href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
-                                img.media-object
+                                img.media-object(style="width:50px;height:50px;border:1px solid red")
                         .media-body
                             h4.media-heading #{item.from.name}
                             p #{item.content}
@@ -35,7 +35,7 @@ block content
                                         .pull-left
                                             img.media-object
                                         .media-body
-                                            h4.media-heading ${reply.from.name}
+                                            h4.media-heading #{reply.from.name}
                                             p #{reply.content} 
             #comments
                 form#commentForm(action="/user/comment", method="POST", style="padding:0 0 60px")

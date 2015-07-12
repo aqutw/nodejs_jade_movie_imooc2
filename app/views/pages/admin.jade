@@ -3,7 +3,7 @@ extends ../layout
 block content
     .container
         .row
-            form.form-horizontal(method="post", action="/admin/movie/new")
+            form.form-horizontal(method="post", action="/admin/movie/new", enctype="multipart/form-data")
                 if movie._id
                     input(type="hidden", name="movie[_id]" value=movie._id)
                 .form-group
@@ -31,7 +31,11 @@ block content
                 .form-group
                     label.col-sm-2.control-label(form="inputPoster") 海報
                     .col-sm-10
-                        input#inputDoctor.form-control(type="text", name="movie[poster]", value=movie.poster)
+                        input#inputPoster.form-control(type="text", name="movie[poster]", value=movie.poster)
+                .form-group
+                    label.col-sm-2.control-label(form="uploadPoster") 海報上傳
+                    .col-sm-10
+                        input#uploadPoster(type="file",name="uploadPoster")
                 .form-group
                     label.col-sm-2.control-label(form="inputCountry") 國家
                     .col-sm-10

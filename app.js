@@ -2,6 +2,7 @@
 var express = require('express');
 var logger = require('express-logger');
 var bodyParser = require('body-parser');
+var multer  = require('multer');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -18,6 +19,7 @@ app.set('views', './app/views/pages' );
 app.set('view engine', 'jade');
 
 app.use(bodyParser()) // app.use(express.bodyParser())
+app.use(multer({ dest: './uploads/'}))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(session({secret: 'imooc', 

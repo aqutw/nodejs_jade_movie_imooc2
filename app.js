@@ -19,7 +19,7 @@ app.set('views', './app/views/pages' );
 app.set('view engine', 'jade');
 
 app.use(bodyParser()) // app.use(express.bodyParser())
-app.use(multer({ dest: './uploads/'}))
+app.use(multer({ dest: './public/uploads/'}))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(session({secret: 'imooc', 

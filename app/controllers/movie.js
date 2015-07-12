@@ -58,8 +58,10 @@ exports.save = function(req, res){
     var movieObj = req.body.movie;
     var _movie;
     
-    req.poster && (movieObj.poster = req.poster);
-    
+    if(req.poster){
+        movieObj.poster = req.poster;
+    }
+        
     if (id){
         Movie.findById(id, function(err, movie){
             if(err){console.log(err);}
@@ -83,6 +85,7 @@ exports.save = function(req, res){
             summary: movieObj.summary,
             flash: movieObj.flash
         });
+
         // console.log('movieObj.category', movieObj.category);
         var catId = movieObj.category;
         var catName = movieObj.categoryName;
@@ -149,14 +152,14 @@ exports.del = function(req, res){
 exports.savePoster = function(req, res, next){
     var posterData = req.files.uploadPoster;
     var filePath = posterData.path;
-    var originalFilename = posterData.originalFilename;
+    var originalname = posterData.originalname;
     
-    if (originalFilename) {
+    if (originalname) {
         fs.readFile(filePath, function(err, data){
             var ts = Date.now();
-            var type = posterData.type.split('/')[1];
-            var poster = ts + '.' + type;
-            var newPath = path.join(__dirname, '../../', '/public/upload/' + poster);
+            var fileext = posterData.mimetype.split('/')[1];
+            var poster = ts + '.' + fileext;
+            var newPath = path.join(__dirname, '../../', '/public/uploads/' + poster);
             
             fs.writeFile(newPath, data, function(err){
                 req.poster = poster;

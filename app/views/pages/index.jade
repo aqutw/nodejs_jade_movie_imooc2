@@ -16,7 +16,7 @@ block content
                                         if item.poster.indexOf('http:')>=0
                                             img(src="#{item.poster}", alt="#{item.title}")
                                         else
-                                            img(src="/upload/#{item.poster}", alt="#{item.title}")
+                                            img(src="/uploads/#{item.poster}", alt="#{item.title}")
                                     .caption
                                         h3 #{item.title}
                                         p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 觀看預告片

@@ -11,6 +11,7 @@ block content
                         th 國家
                         th 上映年份
                         th 錄入時間
+                        th pv
                         th 查看
                         th 更新 
                         th 刪除
@@ -22,6 +23,7 @@ block content
                             td #{item.country}
                             td #{item.year}
                             td #{moment(item.meta.createdAt).format('MM/DD/YYYY')}
+                            td #{item.pv}
                             td: a(href="/movie/#{item.id}") View
                             td: a(href="/admin/movie/update/#{item.id}") Edit
                             td
